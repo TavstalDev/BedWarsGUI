@@ -52,20 +52,20 @@ GUI:
 Modes:
   Solo:
     Name: "Solo"
-    Description: |-
-      - 1v1 BedWars arenas.
+    Description:
+    - "1v1 BedWars arenas."
   Duo:
     Name: "Duo"
-    Description: |-
-      - 2v2 BedWars arenas.
+    Description:
+    - "2v2 BedWars arenas."
   Trio:
     Name: "Trio"
-    Description: |-
-        - 3v3 BedWars arenas.
+    Description:
+    - "3v3 BedWars arenas."
   Squads:
-      Name: "Squads"
-      Description: |-
-        - 4v4 BedWars arenas.
+    Name: "Squads"
+    Description:
+      - "4v4 BedWars arenas."
 
 Status:
   WAITING: "&eWaiting"
@@ -75,14 +75,14 @@ Status:
   DISABLED: "&cDisabled"
 
 ArenaDescriptions:
-  Unknown: |-
-    - No description available.
-  ArenaOne: |-
-    - A small and cozy arena.
-    - Perfect for quick matches.
-  ArenaTwo: |-
-    - A medium-sized arena with balanced features.
-    - Great for casual play.
+  Unknown:
+  - "No description available".
+  ArenaOne:
+  - "A small and cozy arena."
+  - "Perfect for quick matches."
+  ArenaTwo:
+  - "A medium-sized arena with balanced features."
+  - "Great for casual play."
     
 
 # DO NOT TOUCH THIS. This helps to handle config related changes after updates.

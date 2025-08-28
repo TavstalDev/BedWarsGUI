@@ -52,20 +52,20 @@ GUI:
 Modes:
   Solo:
     Name: "Solo"
-    Description: |-
-      - 1v1 BedWars arénák.
+    Description:
+    - "1v1 BedWars arénák."
   Duo:
     Name: "Duo"
-    Description: |-
-      - 2v2 BedWars arénák.
+    Description:
+    - "2v2 BedWars arénák."
   Trio:
     Name: "Trio"
-    Description: |-
-      - 3v3 BedWars arénák.
+    Description:
+    - "3v3 BedWars arénák."
   Squads:
     Name: "Squads"
-    Description: |-
-      - 4v4 BedWars arénák.
+    Description:
+    - "4v4 BedWars arénák."
 
 Status:
   WAITING: "&eVárakozás"
@@ -75,14 +75,14 @@ Status:
   DISABLED: "&cLetiltva"
 
 ArenaDescriptions:
-  Unknown: |-
-    - Nincs elérhető leírás.
-  ArenaOne: |-
-    - Egy kicsi és hangulatos aréna.
-    - Tökéletes a gyors meccsekhez.
-  ArenaTwo: |-
-    - Egy közepes méretű aréna kiegyensúlyozott funkciókkal.
-    - Kiváló a laza játékhoz.
+  Unknown:
+  - "Nincs elérhető leírás."
+  ArenaOne:
+  - "Egy kicsi és hangulatos aréna."
+  - "Tökéletes a gyors meccsekhez."
+  ArenaTwo:
+  - "Egy közepes méretű aréna kiegyensúlyozott funkciókkal."
+  - "Kiváló a laza játékhoz."
 
 
 # DO NOT TOUCH THIS. This helps to handle config related changes after updates.

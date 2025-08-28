@@ -160,18 +160,13 @@ public class ArenaGUI {
                 var lore = new ArrayList<Component>();
                 for (var desc : rawLore) {
                     if (desc.contains("%description%")) {
-                        var description = BedWarsGUI.Translator().Localize(player, String.format("ArenaDescriptions.%s", arena.getName()));
+                        var description = BedWarsGUI.Translator().LocalizeList(player, String.format("ArenaDescriptions.%s", arena.getName()));
                         if (description.isEmpty()) {
-                            description = BedWarsGUI.Translator().Localize(player, "ArenaDescriptions.Unknown");
+                            description = BedWarsGUI.Translator().LocalizeList(player, "ArenaDescriptions.Unknown");
                         }
-                        if (description.contains("\n")) {
-                            String[] descLines = description.split("\n");
-                            for (var line : descLines) {
-                                lore.add(ChatUtils.translateColors(line, true));
-                            }
-                            continue;
+                        for (var line : description) {
+                            lore.add(ChatUtils.translateColors(line, true));
                         }
-                        lore.add(ChatUtils.translateColors(description, true));
                         continue;
                     }
 

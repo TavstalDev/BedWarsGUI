@@ -155,14 +155,9 @@ public class MainGUI {
                         if (description.isEmpty()) {
                             continue;
                         }
-                        if (description.contains("\n")) {
-                            String[] descLines = description.split("\n");
-                            for (var line : descLines) {
-                                lore.add(ChatUtils.translateColors(line, true));
-                            }
-                            continue;
+                        for (var line : description) {
+                            lore.add(ChatUtils.translateColors(line, true));
                         }
-                        lore.add(ChatUtils.translateColors(description, true));
                         continue;
                     }
 

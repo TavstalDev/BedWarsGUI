@@ -25,8 +25,8 @@ public class ArenaMode {
         return BedWarsGUI.Translator().Localize(player, name);
     }
 
-    public String getDescription(Player player) {
-        return BedWarsGUI.Translator().Localize(player, description);
+    public List<String> getDescription(Player player) {
+        return BedWarsGUI.Translator().LocalizeList(player, description);
     }
 
     public Material getItem() {
