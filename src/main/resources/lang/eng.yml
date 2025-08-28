@@ -33,6 +33,7 @@ GUI:
   PreviousPage: "&7Previous Page"
   NextPage: "&7Next Page"
   Page: "&7Page: &f%page%"
+  AutoJoin: "&aAuto Join"
   Main:
     Title: "&4> &cBedWars Arenas"
     Name: "&b%mode%"

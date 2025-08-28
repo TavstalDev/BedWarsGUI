@@ -10,12 +10,14 @@ import io.github.tavstaldev.minecorelib.core.PluginTranslator;
 import io.github.tavstaldev.minecorelib.utils.ChatUtils;
 import io.github.tavstaldev.minecorelib.utils.GuiUtils;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
+import org.screamingsandals.bedwars.api.BedwarsAPI;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -56,6 +58,18 @@ public class MainGUI {
                     )
             );
             menu.setButton(0, 31, pageButton);
+
+            // AutoJoin Button
+            Material autoJoinMaterial = IconUtils.getMaterialFromConfig("gui.autoJoinItem");
+            SGButton autoJoinButton = new SGButton(
+                    GuiUtils.createItem(BedWarsGUI.Instance, autoJoinMaterial, _translator.Localize(player, "GUI.AutoJoin"))
+            ).withListener(event -> {
+                var tempCommand = BedWarsGUI.Config().getString("arenaAutoJoinCommand");
+                final String command = tempCommand != null ? tempCommand : "bw autojoin";
+                close(player);
+                Bukkit.dispatchCommand(player, command);
+            });
+            menu.setButton(0, 35, autoJoinButton);
             return menu;
         }
         catch (Exception ex) {

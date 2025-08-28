@@ -10,6 +10,7 @@ debug: false
 # Command to join an arena
 # %s will be replaced with the arena name
 arenaJoinCommand: "/bw join %s"
+arenaAutoJoinCommand: "/bw autojoin"
 
 # Arena mode settings
 # You can add/remove modes, but make sure to also update the lang file accordingly
@@ -47,6 +48,7 @@ gui:
   nextPageItem: ARROW
   closeItem: BARRIER
   backItem: SPRUCE_DOOR
+  autoJoinItem: ENDER_EYE
 
 # For setting arena item icons in the GUI
 # The arena names here must match with the arena names in ScreamingBedWars.

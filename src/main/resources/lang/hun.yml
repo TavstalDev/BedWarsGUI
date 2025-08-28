@@ -33,6 +33,7 @@ GUI:
   PreviousPage: "&7Előző oldal"
   NextPage: "&7Következő oldal"
   Page: "&7Oldal: &f%page%"
+  AutoJoin: "&aAutomatikus csatlakozás"
   Main:
     Title: "&4> &cBedWars Arénák"
     Name: "&b%mode%"
