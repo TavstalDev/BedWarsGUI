@@ -1,0 +1,89 @@
+General:
+  NoPermission: "%prefix% &cNincs jogosultságod ehhez."
+
+Commands:
+  ConsoleCaller: "%prefix% &cA parancsot csak játékosok használhatják."
+  UnknownError: "%prefix% &cIsmeretlen hiba történt. Kérlek, jelentsd!"
+  Common:
+    InvalidPage: "%prefix% &cÉrvénytelen oldalszám."
+  Help:
+    Desc: "Információkat mutat a parancsokról."
+    Title: "&e=== &aBedWarsGUI Súgó &e=== &aOldal &c%current_page%&a/&c%max_page% &e==="
+    Info: "   &c[] &7- &6Kötelező   &c<> &7- &6Opcionális"
+    Line: "&2/bwgui %subcommand%&a%syntax% &8» &7%description%"
+    Bottom: "&e====== %previous_btn%&6%current_page%&e/&6%max_page%%next_btn% &e======"
+    PrevBtn: "&a<<< "
+    NextBtn: " &a>>>"
+  Version:
+    Desc: "Megmutatja a plugin verzióját."
+    Current: "%prefix% &aA BedWarsGUI '&3%version%&a' verzióját használod."
+    UpToDate: "%prefix% &aA BedWarsGUI naprakész."
+    Outdated: "%prefix% &cA BedWarsGUI elavult. Itt töltheted le: &e%link%"
+  Reload:
+    Desc: "Újratölti a plugin konfigurációját és üzeneteit."
+    Done: "%prefix% &aA plugin frissítve."
+  Gui:
+    Desc: "Megnyitja a GUI-t."
+
+GUI:
+  Cancel: "&cMégse"
+  Confirm: "&aMegerősítés"
+  Close: "&cBezárás"
+  Back: "&cVissza"
+  PreviousPage: "&7Előző oldal"
+  NextPage: "&7Következő oldal"
+  Page: "&7Oldal: &f%page%"
+  Main:
+    Title: "&4> &cBedWars Arénák"
+    Name: "&b%mode%"
+    Lore:
+      - "%description%"
+      - "&7Kattints a(z) %mode% arénák megtekintéséhez."
+  Arena:
+    Title: "&4> &c%mode% Arénák"
+    Name: "&b%arena%"
+    Lore:
+      - "%status%"
+      - "&7Játékosok: &a%players%&7/&a%max_players%"
+      - "&8&m----------------"
+      - "%description%"
+      - "&8&m----------------"
+
+Modes:
+  Solo:
+    Name: "Solo"
+    Description: |-
+      - 1v1 BedWars arénák.
+  Duo:
+    Name: "Duo"
+    Description: |-
+      - 2v2 BedWars arénák.
+  Trio:
+    Name: "Trio"
+    Description: |-
+      - 3v3 BedWars arénák.
+  Squads:
+    Name: "Squads"
+    Description: |-
+      - 4v4 BedWars arénák.
+
+Status:
+  WAITING: "&eVárakozás"
+  RUNNING: "&aJátékban"
+  GAME_END_CELEBRATING: "&6Ünneplés"
+  REBUILDING: "&bÚjjáépítés"
+  DISABLED: "&cLetiltva"
+
+ArenaDescriptions:
+  Unknown: |-
+    - Nincs elérhető leírás.
+  ArenaOne: |-
+    - Egy kicsi és hangulatos aréna.
+    - Tökéletes a gyors meccsekhez.
+  ArenaTwo: |-
+    - Egy közepes méretű aréna kiegyensúlyozott funkciókkal.
+    - Kiváló a laza játékhoz.
+
+
+# DO NOT TOUCH THIS. This helps to handle config related changes after updates.
+FileVersion: 1

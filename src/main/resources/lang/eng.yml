@@ -1,0 +1,89 @@
+General:
+  NoPermission: "%prefix% &cYou have no permission to do that."
+
+Commands:
+  ConsoleCaller: "%prefix% &cYou must be a player to use this command."
+  UnknownError: "%prefix% &cUnknown error happened. Please report it."
+  Common:
+    InvalidPage: "%prefix% &cInvalid page number."
+  Help:
+    Desc: "Shows information about the commands."
+    Title: "&e=== &aBedWarsGUI Help &e=== &aPage &c%current_page%&a/&c%max_page% &e==="
+    Info: "   &c[] &7- &6Required   &c<> &7- &6Optional"
+    Line: "&2/bwgui %subcommand%&a%syntax% &8» &7%description%"
+    Bottom: "&e====== %previous_btn%&6%current_page%&e/&6%max_page%%next_btn% &e======"
+    PrevBtn: "&a<<< "
+    NextBtn: " &a>>>"
+  Version:
+    Desc: "Shows the plugin version."
+    Current: "%prefix% &aYou are using the '&3%version%&a' version of BedWarsGUI."
+    UpToDate: "%prefix% &aBedWarsGUI is up to date."
+    Outdated: "%prefix% &cBedWarsGUI is outdated. You can download it here: &e%link%"
+  Reload:
+    Desc: "Reloads the plugin config and its messages."
+    Done: "%prefix% &aThe plugin has been reloaded."
+  Gui:
+    Desc: "Opens the GUI."
+
+GUI:
+  Cancel: "&cCancel"
+  Confirm: "&aConfirm"
+  Close: "&cClose"
+  Back: "&cBack"
+  PreviousPage: "&7Previous Page"
+  NextPage: "&7Next Page"
+  Page: "&7Page: &f%page%"
+  Main:
+    Title: "&4> &cBedWars Arenas"
+    Name: "&b%mode%"
+    Lore:
+      - "%description%"
+      - "&7Click to view %mode% arenas."
+  Arena:
+    Title: "&4> &c%mode% Arenas"
+    Name: "&b%arena%"
+    Lore:
+      - "%status%"
+      - "&7Players: &a%players%&7/&a%max_players%"
+      - "&8&m----------------"
+      - "%description%"
+      - "&8&m----------------"
+
+Modes:
+  Solo:
+    Name: "Solo"
+    Description: |-
+      - 1v1 BedWars arenas.
+  Duo:
+    Name: "Duo"
+    Description: |-
+      - 2v2 BedWars arenas.
+  Trio:
+    Name: "Trio"
+    Description: |-
+        - 3v3 BedWars arenas.
+  Squads:
+      Name: "Squads"
+      Description: |-
+        - 4v4 BedWars arenas.
+
+Status:
+  WAITING: "&eWaiting"
+  RUNNING: "&aRunning"
+  GAME_END_CELEBRATING: "&6Celebrating"
+  REBUILDING: "&bRebuilding"
+  DISABLED: "&cDisabled"
+
+ArenaDescriptions:
+  Unknown: |-
+    - No description available.
+  ArenaOne: |-
+    - A small and cozy arena.
+    - Perfect for quick matches.
+  ArenaTwo: |-
+    - A medium-sized arena with balanced features.
+    - Great for casual play.
+    
+
+# DO NOT TOUCH THIS. This helps to handle config related changes after updates.
+FileVersion: 1
