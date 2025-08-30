@@ -6,10 +6,8 @@ import io.github.tavstaldev.bedWarsGUI.models.ArenaMode;
 import io.github.tavstaldev.minecorelib.PluginBase;
 import io.github.tavstaldev.minecorelib.core.PluginLogger;
 import io.github.tavstaldev.minecorelib.core.PluginTranslator;
-import io.github.tavstaldev.minecorelib.utils.TypeUtils;
 import io.github.tavstaldev.minecorelib.utils.VersionUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.screamingsandals.bedwars.api.BedwarsAPI;
 
