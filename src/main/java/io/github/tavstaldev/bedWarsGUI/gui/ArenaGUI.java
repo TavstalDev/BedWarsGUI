@@ -161,7 +161,7 @@ public class ArenaGUI {
                 for (var desc : rawLore) {
                     if (desc.contains("%description%")) {
                         var description = BedWarsGUI.Translator().LocalizeList(player, String.format("ArenaDescriptions.%s", arena.getName()));
-                        if (description.isEmpty()) {
+                        if (description == null || description.isEmpty()) {
                             description = BedWarsGUI.Translator().LocalizeList(player, "ArenaDescriptions.Unknown");
                         }
                         for (var line : description) {

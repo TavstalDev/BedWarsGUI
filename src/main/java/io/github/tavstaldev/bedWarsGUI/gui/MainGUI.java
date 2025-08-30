@@ -166,7 +166,7 @@ public class MainGUI {
                 for (var desc : rawLore) {
                     if (desc.contains("%description%")) {
                         var description = arena.getDescription(player);
-                        if (description.isEmpty()) {
+                        if (description == null || description.isEmpty()) {
                             continue;
                         }
                         for (var line : description) {
