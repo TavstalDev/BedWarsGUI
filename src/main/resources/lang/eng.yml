@@ -4,6 +4,7 @@ General:
 Commands:
   ConsoleCaller: "%prefix% &cYou must be a player to use this command."
   UnknownError: "%prefix% &cUnknown error happened. Please report it."
+  InGame: "%prefix% &cYou cannot use this command while in a game."
   Common:
     InvalidPage: "%prefix% &cInvalid page number."
   Help:

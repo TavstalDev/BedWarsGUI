@@ -13,6 +13,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.screamingsandals.bedwars.api.BedwarsAPI;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -105,6 +106,12 @@ public class CommandGUI implements CommandExecutor {
             }
 
             BedWarsGUI.Instance.sendLocalizedMsg(player, "Commands.InvalidArguments");
+            return true;
+        }
+
+        if (BedwarsAPI.getInstance().isPlayerPlayingAnyGame(player))
+        {
+            BedWarsGUI.Instance.sendLocalizedMsg(player, "Commands.InGame");
             return true;
         }
 

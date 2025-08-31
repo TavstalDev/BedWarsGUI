@@ -17,7 +17,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
-import org.screamingsandals.bedwars.api.BedwarsAPI;
 
 import java.awt.*;
 import java.util.ArrayList;

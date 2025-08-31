@@ -4,6 +4,7 @@ General:
 Commands:
   ConsoleCaller: "%prefix% &cA parancsot csak játékosok használhatják."
   UnknownError: "%prefix% &cIsmeretlen hiba történt. Kérlek, jelentsd!"
+  InGame: "%prefix% &cEzt a parancsot nem használhatod aktív játék közben."
   Common:
     InvalidPage: "%prefix% &cÉrvénytelen oldalszám."
   Help:
