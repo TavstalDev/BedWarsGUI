@@ -2,6 +2,7 @@ package io.github.tavstaldev.bedWarsGUI.gui;
 
 import com.samjakob.spigui.buttons.SGButton;
 import com.samjakob.spigui.menu.SGMenu;
+import io.github.tavstaldev.bedWarsGUI.BWGConfiguration;
 import io.github.tavstaldev.bedWarsGUI.BedWarsGUI;
 import io.github.tavstaldev.bedWarsGUI.managers.PlayerCacheManager;
 import io.github.tavstaldev.bedWarsGUI.utils.IconUtils;
@@ -30,19 +31,18 @@ public class ArenaGUI {
     public static SGMenu create(@NotNull Player player) {
         try {
             SGMenu menu = BedWarsGUI.GUI().create("...", Rows);
+            BWGConfiguration config = BedWarsGUI.Config();
 
             // Create Placeholders
-            Material placeholderMaterial = IconUtils.getMaterialFromConfig("gui.placeholderItem");
-            SGButton placeholderButton = new SGButton(GuiUtils.createItem(BedWarsGUI.Instance, placeholderMaterial, " "));
+            SGButton placeholderButton = new SGButton(GuiUtils.createItem(BedWarsGUI.Instance, config.guiPlaceholderItem, " "));
             int slots = Rows * 9;
             for (int i = 0; i < slots; i++) {
                 menu.setButton(0, i, placeholderButton);
             }
 
             // Back Button
-            Material closeMaterial = IconUtils.getMaterialFromConfig("gui.backItem");
             SGButton closeButton = new SGButton(
-                    GuiUtils.createItem(BedWarsGUI.Instance, closeMaterial, _translator.Localize(player, "GUI.Back"))
+                    GuiUtils.createItem(BedWarsGUI.Instance, config.guiBackItem, _translator.Localize(player, "GUI.Back"))
             ).withListener(event -> {
                 close(player);
                 MainGUI.open(player);
@@ -50,11 +50,10 @@ public class ArenaGUI {
             menu.setButton(0, 45, closeButton);
 
             // Page Indicator
-            Material pageMaterial = IconUtils.getMaterialFromConfig("gui.currentPageItem");
             SGButton pageButton = new SGButton(
                     GuiUtils.createItem(
                             BedWarsGUI.Instance,
-                            pageMaterial,
+                            config.guiCurrentPageItem,
                             _translator.Localize(player, "GUI.Page", Map.of("page", "1"))
                     )
             );
@@ -89,6 +88,7 @@ public class ArenaGUI {
             var playerId = player.getUniqueId();
             var playerCache = PlayerCacheManager.get(playerId);
             var menu = playerCache.getArenaMenu();
+            BWGConfiguration config = BedWarsGUI.Config();
 
             var arenas = playerCache.getAvailableArenas();
             int page = playerCache.getArenaPage();
@@ -97,9 +97,9 @@ public class ArenaGUI {
 
             //#region Previous Page Button
             Material prevMaterial = hasPrevious ?
-                    IconUtils.getMaterialFromConfig("gui.previousPageItem")
+                    config.guiPreviousPageItem
                     :
-                    IconUtils.getMaterialFromConfig("gui.noPreviousPageItem");
+                    config.guiNoPreviousPageItem;
             String prevName = hasPrevious ? _translator.Localize(player, "GUI.PreviousPage") : " ";
             SGButton prevPageButton = new SGButton(
                     GuiUtils.createItem(BedWarsGUI.Instance, prevMaterial, prevName )
@@ -114,9 +114,8 @@ public class ArenaGUI {
             //#endregion
 
             //#region Page Indicator
-            Material pageMaterial = IconUtils.getMaterialFromConfig("gui.currentPageItem");
             SGButton pageButton = new SGButton(
-                    GuiUtils.createItem(BedWarsGUI.Instance, pageMaterial, _translator.Localize(player, "GUI.Page", Map.of(
+                    GuiUtils.createItem(BedWarsGUI.Instance, config.guiCurrentPageItem, _translator.Localize(player, "GUI.Page", Map.of(
                             "page", String.valueOf(page)))
                     )
             );
@@ -125,9 +124,9 @@ public class ArenaGUI {
 
             //#region Next Page Button
             Material nextMaterial = hasNext ?
-                    IconUtils.getMaterialFromConfig("gui.nextPageItem")
+                    config.guiNextPageItem
                     :
-                    IconUtils.getMaterialFromConfig("gui.noNextPageItem");
+                   config.guiNoNextPageItem;
             String nextName = hasNext ? _translator.Localize(player, "GUI.NextPage") : " ";
             SGButton nextPageButton = new SGButton(GuiUtils.createItem(BedWarsGUI.Instance, nextMaterial,nextName)
             ).withListener(event -> {
@@ -141,8 +140,7 @@ public class ArenaGUI {
             menu.setButton(0, 50, nextPageButton);
             //#endregion
 
-            String commandConfigValue = BedWarsGUI.Config().getString("arenaJoinCommand");
-            final String bwJoinCommand = commandConfigValue != null ? commandConfigValue : "bw join %s";
+            final String bwJoinCommand = config.arenaJoinCommand;
 
             for (int i = 0; i < ItemsPerPage; i++) {
                 int index = i + (page - 1) * ItemsPerPage;

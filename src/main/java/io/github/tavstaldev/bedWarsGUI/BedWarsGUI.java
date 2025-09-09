@@ -17,7 +17,6 @@ import java.util.Map;
 
 public class BedWarsGUI extends PluginBase {
     public static BedWarsGUI Instance;
-    private final PluginTranslator _translator;
     private SpiGUI _spiGUI;
     private BedwarsAPI _bedwarsApi;
     private List<ArenaMode> _arenaModes;
@@ -28,8 +27,8 @@ public class BedWarsGUI extends PluginBase {
     public static PluginTranslator Translator() {
         return Instance.getTranslator();
     }
-    public static FileConfiguration Config(){
-        return Instance.getConfig();
+    public static BWGConfiguration Config(){
+        return (BWGConfiguration) Instance.getConfig();
     }
     public static SpiGUI GUI() {
         return Instance._spiGUI;
@@ -38,18 +37,14 @@ public class BedWarsGUI extends PluginBase {
     public static List<ArenaMode> ArenaModes() {return Instance._arenaModes;}
 
     public BedWarsGUI() {
-        super("BedWarsGUI",
-                "1.0.0",
-                "Tavstal",
-                "https://github.com/TavstalDev/BedWarsGUI/releases/latest",
-                new String[]{"eng", "hun"}
-        );
-        _translator = getTranslator();
+        super("https://github.com/TavstalDev/BedWarsGUI/releases/latest");
     }
 
     @Override
     public void onEnable() {
         Instance = this;
+        _config = new BWGConfiguration();
+        _translator = new PluginTranslator(this, new String[]{"eng", "hun"});
         _logger.Info(String.format("Loading %s...", getProjectName()));
 
         if (VersionUtils.isLegacy()) {
@@ -124,16 +119,18 @@ public class BedWarsGUI extends PluginBase {
 
 
         _logger.Ok(String.format("%s has been successfully loaded.", getProjectName()));
-        isUpToDate().thenAccept(upToDate -> {
-            if (upToDate) {
-                _logger.Ok("Plugin is up to date!");
-            } else {
-                _logger.Warn("A new version of the plugin is available: " + getDownloadUrl());
-            }
-        }).exceptionally(e -> {
-            _logger.Error("Failed to determine update status: " + e.getMessage());
-            return null;
-        });
+        if (Config().checkForUpdates) {
+            isUpToDate().thenAccept(upToDate -> {
+                if (upToDate) {
+                    _logger.Ok("Plugin is up to date!");
+                } else {
+                    _logger.Warn("A new version of the plugin is available: " + getDownloadUrl());
+                }
+            }).exceptionally(e -> {
+                _logger.Error("Failed to determine update status: " + e.getMessage());
+                return null;
+            });
+        }
     }
 
     @Override
@@ -147,7 +144,7 @@ public class BedWarsGUI extends PluginBase {
         _translator.Load();
         _logger.Debug("Localizations reloaded.");
         _logger.Debug("Reloading configuration...");
-        this.reloadConfig();
+        this._config.load();
         _logger.Debug("Configuration reloaded.");
 
         _arenaModes.clear();
