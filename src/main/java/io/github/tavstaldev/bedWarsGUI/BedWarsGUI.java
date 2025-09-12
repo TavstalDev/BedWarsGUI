@@ -37,7 +37,7 @@ public class BedWarsGUI extends PluginBase {
     public static List<ArenaMode> ArenaModes() {return Instance._arenaModes;}
 
     public BedWarsGUI() {
-        super("https://github.com/TavstalDev/BedWarsGUI/releases/latest");
+        super(true, "https://github.com/TavstalDev/BedWarsGUI/releases/latest");
     }
 
     @Override

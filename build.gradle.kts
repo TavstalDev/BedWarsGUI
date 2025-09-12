@@ -15,7 +15,6 @@ plugins {
 // Define project properties for versions and package name
 val javaVersion: String by project
 val paperApiVersion: String by project
-val snakeYamlVersion: String by project
 val mineCoreLibVersion: String by project
 val spiGuiVersion: String by project
 val bedWarsVersion: String by project
