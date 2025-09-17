@@ -43,6 +43,7 @@ public class BedWarsGUI extends PluginBase {
     @Override
     public void onEnable() {
         Instance = this;
+        super.onEnable();
         _config = new BWGConfiguration();
         _translator = new PluginTranslator(this, new String[]{"eng", "hun"});
         _logger.Info(String.format("Loading %s...", getProjectName()));
@@ -135,6 +136,7 @@ public class BedWarsGUI extends PluginBase {
 
     @Override
     public void onDisable() {
+        super.onDisable();
         _logger.Info(String.format("%s has been successfully unloaded.", getProjectName()));
     }
 
