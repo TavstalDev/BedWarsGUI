@@ -3,12 +3,12 @@ package io.github.tavstaldev.bedWarsGUI;
 import com.samjakob.spigui.SpiGUI;
 import io.github.tavstaldev.bedWarsGUI.commands.CommandGUI;
 import io.github.tavstaldev.bedWarsGUI.models.ArenaMode;
+import io.github.tavstaldev.bedWarsGUI.tasks.CacheCleanTask;
 import io.github.tavstaldev.minecorelib.PluginBase;
 import io.github.tavstaldev.minecorelib.core.PluginLogger;
 import io.github.tavstaldev.minecorelib.core.PluginTranslator;
 import io.github.tavstaldev.minecorelib.utils.VersionUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.screamingsandals.bedwars.api.BedwarsAPI;
 
 import java.util.ArrayList;
@@ -20,6 +20,7 @@ public class BedWarsGUI extends PluginBase {
     private SpiGUI _spiGUI;
     private BedwarsAPI _bedwarsApi;
     private List<ArenaMode> _arenaModes;
+    private CacheCleanTask cacheCleanTask; // Task for cleaning player caches.
 
     public static PluginLogger Logger() {
         return Instance.getCustomLogger();
@@ -117,6 +118,12 @@ public class BedWarsGUI extends PluginBase {
                 _arenaModes.add(arenaMode);
             }
         }
+
+        // Register cache cleanup task.
+        if (cacheCleanTask != null && !cacheCleanTask.isCancelled())
+            cacheCleanTask.cancel();
+        cacheCleanTask = new CacheCleanTask(); // Runs every 5 minutes
+        cacheCleanTask.runTaskTimer(this, 0, 5 * 60 * 20);
 
 
         _logger.Ok(String.format("%s has been successfully loaded.", getProjectName()));
