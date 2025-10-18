@@ -5,7 +5,6 @@ import com.samjakob.spigui.menu.SGMenu;
 import io.github.tavstaldev.bedWarsGUI.BWGConfiguration;
 import io.github.tavstaldev.bedWarsGUI.BedWarsGUI;
 import io.github.tavstaldev.bedWarsGUI.managers.PlayerCacheManager;
-import io.github.tavstaldev.bedWarsGUI.utils.IconUtils;
 import io.github.tavstaldev.minecorelib.core.PluginLogger;
 import io.github.tavstaldev.minecorelib.core.PluginTranslator;
 import io.github.tavstaldev.minecorelib.utils.ChatUtils;
@@ -19,47 +18,56 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * The MainGUI class is responsible for creating, opening, closing, and refreshing
+ * the main GUI for players in the BedWars plugin.
+ */
 public class MainGUI {
-    private static final PluginLogger _logger = BedWarsGUI.Logger().WithModule(MainGUI.class);
+    private static final PluginLogger _logger = BedWarsGUI.Logger().withModule(MainGUI.class);
     private static final PluginTranslator _translator = BedWarsGUI.Instance.getTranslator();
-    private static final Integer ItemsPerPage = 14;
-    private static final  Integer Rows = 4;
+    private static final Integer itemsPerPage = 14; // Maximum number of items per page
+    private static final Integer rows = 4; // Number of rows in the GUI
 
+    /**
+     * Creates the main GUI for the specified player.
+     *
+     * @param player The player for whom the GUI is being created.
+     * @return The created SGMenu instance representing the main GUI.
+     */
     public static SGMenu create(@NotNull Player player) {
         try {
-            SGMenu menu = BedWarsGUI.GUI().create(_translator.Localize(player, "GUI.Main.Title"), Rows);
+            SGMenu menu = BedWarsGUI.GUI().create(_translator.localize(player, "GUI.Main.Title"), rows);
             BWGConfiguration config = BedWarsGUI.Config();
 
-            // Create Placeholders
+            // Create placeholders for empty slots
             SGButton placeholderButton = new SGButton(GuiUtils.createItem(BedWarsGUI.Instance, config.guiPlaceholderItem, " "));
-            int slots = Rows * 9;
+            int slots = rows * 9;
             for (int i = 0; i < slots; i++) {
                 menu.setButton(0, i, placeholderButton);
             }
 
-            // Close Button
+            // Close button to exit the GUI
             SGButton closeButton = new SGButton(
-                    GuiUtils.createItem(BedWarsGUI.Instance, config.guiCloseItem, _translator.Localize(player, "GUI.Close"))
+                    GuiUtils.createItem(BedWarsGUI.Instance, config.guiCloseItem, _translator.localize(player, "GUI.Close"))
             ).withListener(event -> close(player));
             menu.setButton(0, 27, closeButton);
 
-            // Page Indicator
+            // Page indicator button
             SGButton pageButton = new SGButton(
                     GuiUtils.createItem(
                             BedWarsGUI.Instance,
                             config.guiCurrentPageItem,
-                            _translator.Localize(player, "GUI.Page", Map.of("page", "1"))
+                            _translator.localize(player, "GUI.Page", Map.of("page", "1"))
                     )
             );
             menu.setButton(0, 31, pageButton);
 
-            // AutoJoin Button
+            // AutoJoin button to join an arena automatically
             SGButton autoJoinButton = new SGButton(
-                    GuiUtils.createItem(BedWarsGUI.Instance, config.guiAutoJoinItem, _translator.Localize(player, "GUI.AutoJoin"))
+                    GuiUtils.createItem(BedWarsGUI.Instance, config.guiAutoJoinItem, _translator.localize(player, "GUI.AutoJoin"))
             ).withListener(event -> {
                 final String command = config.arenaAutoJoinCommand;
                 close(player);
@@ -67,14 +75,18 @@ public class MainGUI {
             });
             menu.setButton(0, 35, autoJoinButton);
             return menu;
-        }
-        catch (Exception ex) {
-            _logger.Error("An error occurred while creating the main GUI.");
-            _logger.Error(ex);
+        } catch (Exception ex) {
+            _logger.error("An error occurred while creating the main GUI.");
+            _logger.error(ex);
             return null;
         }
     }
 
+    /**
+     * Opens the main GUI for the specified player.
+     *
+     * @param player The player for whom the GUI is being opened.
+     */
     public static void open(@NotNull Player player) {
         var playerCache = PlayerCacheManager.get(player.getUniqueId());
         // Show the GUI
@@ -84,12 +96,22 @@ public class MainGUI {
         refresh(player);
     }
 
+    /**
+     * Closes the main GUI for the specified player.
+     *
+     * @param player The player for whom the GUI is being closed.
+     */
     public static void close(@NotNull Player player) {
         var playerCache = PlayerCacheManager.get(player.getUniqueId());
         player.closeInventory();
         playerCache.setGuiOpened(false);
     }
 
+    /**
+     * Refreshes the main GUI for the specified player, updating its contents.
+     *
+     * @param player The player for whom the GUI is being refreshed.
+     */
     public static void refresh(@NotNull Player player) {
         try {
             var playerId = player.getUniqueId();
@@ -97,21 +119,17 @@ public class MainGUI {
             var menu = playerCache.getMainMenu();
             BWGConfiguration config = BedWarsGUI.Config();
 
-            //var games = BedWarsGUI.BedwarsApi().getGames();
             var arenas = BedWarsGUI.ArenaModes();
             int page = playerCache.getMainPage();
             boolean hasPrevious = page > 1;
-            boolean hasNext = arenas.size() > page * ItemsPerPage;
+            boolean hasNext = arenas.size() > page * itemsPerPage;
 
-            //#region Previous Page Button
-            // Material
+            // Previous page button
             Material prevMaterial = hasPrevious ?
                     config.guiPreviousPageItem
                     :
-                   config.guiNoPreviousPageItem;
-            // Name
-            String prevName = hasPrevious ? _translator.Localize(player, "GUI.PreviousPage") : " ";
-            // Button
+                    config.guiNoPreviousPageItem;
+            String prevName = hasPrevious ? _translator.localize(player, "GUI.PreviousPage") : " ";
             SGButton prevPageButton = new SGButton(
                     GuiUtils.createItem(BedWarsGUI.Instance, prevMaterial, prevName)
             ).withListener(event -> {
@@ -122,42 +140,37 @@ public class MainGUI {
                 }
             });
             menu.setButton(0, 30, prevPageButton);
-            //#endregion
 
-            //#region Page Indicator
+            // Page indicator button
             SGButton pageButton = new SGButton(
-                    GuiUtils.createItem(BedWarsGUI.Instance, config.guiCurrentPageItem, _translator.Localize(player, "GUI.Page", Map.of(
+                    GuiUtils.createItem(BedWarsGUI.Instance, config.guiCurrentPageItem, _translator.localize(player, "GUI.Page", Map.of(
                             "page", String.valueOf(page)))
                     )
             );
             menu.setButton(0, 31, pageButton);
-            //#endregion
 
-            //#region Next Page Button
+            // Next page button
             Material nextMaterial = hasNext ?
                     config.guiNextPageItem
                     :
-                   config.guiNoNextPageItem;
-
-            String nextName = hasNext ? _translator.Localize(player, "GUI.NextPage") : " ";
+                    config.guiNoNextPageItem;
+            String nextName = hasNext ? _translator.localize(player, "GUI.NextPage") : " ";
             SGButton nextPageButton = new SGButton(GuiUtils.createItem(BedWarsGUI.Instance, nextMaterial, nextName)
             ).withListener(event -> {
                 var playerCache_ = PlayerCacheManager.get(playerId);
-                int maxPage = 1 + arenas.size() / ItemsPerPage;
+                int maxPage = 1 + arenas.size() / itemsPerPage;
                 if (playerCache_.getMainPage() < maxPage) {
                     playerCache_.setMainPage(playerCache_.getMainPage() + 1);
                     refresh(player);
                 }
             });
             menu.setButton(0, 32, nextPageButton);
-            //#endregion
 
-            // TODO: Pagination for arenas
-            // At the moment this is not needed as there are not that many arena modes
+            // Populate the GUI with arena modes
             for (var arena : arenas) {
                 var material = arena.getItem();
-                String displayName = BedWarsGUI.Translator().Localize(player, "GUI.Main.Name", Map.of("mode", arena.getName(player)));
-                var rawLore = BedWarsGUI.Translator().LocalizeList(player, "GUI.Main.Lore");
+                String displayName = BedWarsGUI.Translator().localize(player, "GUI.Main.Name", Map.of("mode", arena.getName(player)));
+                var rawLore = BedWarsGUI.Translator().localizeList(player, "GUI.Main.Lore");
                 var lore = new ArrayList<Component>();
                 for (var desc : rawLore) {
                     if (desc.contains("%description%")) {
@@ -190,10 +203,9 @@ public class MainGUI {
                 }));
             }
             player.openInventory(menu.getInventory());
-        }
-        catch (Exception ex) {
-            _logger.Error("An error occurred while refreshing the main GUI.");
-            _logger.Error(ex);
+        } catch (Exception ex) {
+            _logger.error("An error occurred while refreshing the main GUI.");
+            _logger.error(ex);
         }
     }
 }

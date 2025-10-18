@@ -16,16 +16,16 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public class EventListener implements Listener
 {
     // Logger instance for logging messages related to this event listener.
-    private static final PluginLogger _logger = BedWarsGUI.Logger().WithModule(EventListener.class);
+    private static final PluginLogger _logger = BedWarsGUI.Logger().withModule(EventListener.class);
 
     /**
      * Initializes the event listener by registering it with the Bukkit plugin manager.
      * Logs debug messages during the registration process.
      */
     public static void init() {
-        _logger.Debug("Registering event listener...");
+        _logger.debug("Registering event listener...");
         Bukkit.getPluginManager().registerEvents(new EventListener(), BedWarsGUI.Instance);
-        _logger.Debug("Event listener registered.");
+        _logger.debug("Event listener registered.");
     }
 
     /**

@@ -15,42 +15,94 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The BedWarsGUI class is the main plugin class for the BedWarsGUI plugin.
+ * It extends the PluginBase class and provides initialization, configuration,
+ * and management of the plugin's features, such as arena modes, GUI handling,
+ * and integration with the BedWars plugin.
+ */
 public class BedWarsGUI extends PluginBase {
-    public static BedWarsGUI Instance;
-    private SpiGUI _spiGUI;
-    private BedwarsAPI _bedwarsApi;
-    private List<ArenaMode> _arenaModes;
-    private CacheCleanTask cacheCleanTask; // Task for cleaning player caches.
+    public static BedWarsGUI Instance; // Singleton instance of the plugin
+    private SpiGUI _spiGUI; // SpiGUI instance for managing GUIs
+    private BedwarsAPI _bedwarsApi; // API instance for interacting with the BedWars plugin
+    private List<ArenaMode> _arenaModes; // List of available arena modes
+    private CacheCleanTask cacheCleanTask; // Task for cleaning player caches
 
+    /**
+     * Retrieves the plugin's logger instance.
+     *
+     * @return The PluginLogger instance for logging messages.
+     */
     public static PluginLogger Logger() {
         return Instance.getCustomLogger();
     }
+
+    /**
+     * Retrieves the plugin's translator instance.
+     *
+     * @return The PluginTranslator instance for localization.
+     */
     public static PluginTranslator Translator() {
         return Instance.getTranslator();
     }
-    public static BWGConfiguration Config(){
+
+    /**
+     * Retrieves the plugin's configuration instance.
+     *
+     * @return The BWGConfiguration instance for accessing configuration values.
+     */
+    public static BWGConfiguration Config() {
         return (BWGConfiguration) Instance.getConfig();
     }
+
+    /**
+     * Retrieves the SpiGUI instance for managing GUIs.
+     *
+     * @return The SpiGUI instance.
+     */
     public static SpiGUI GUI() {
         return Instance._spiGUI;
     }
-    public static BedwarsAPI BedwarsApi() {return Instance._bedwarsApi;}
-    public static List<ArenaMode> ArenaModes() {return Instance._arenaModes;}
 
+    /**
+     * Retrieves the BedWars API instance.
+     *
+     * @return The BedwarsAPI instance.
+     */
+    public static BedwarsAPI BedwarsApi() {
+        return Instance._bedwarsApi;
+    }
+
+    /**
+     * Retrieves the list of available arena modes.
+     *
+     * @return A list of ArenaMode instances.
+     */
+    public static List<ArenaMode> ArenaModes() {
+        return Instance._arenaModes;
+    }
+
+    /**
+     * Constructs a BedWarsGUI instance and sets the plugin's update URL.
+     */
     public BedWarsGUI() {
         super(true, "https://github.com/TavstalDev/BedWarsGUI/releases/latest");
     }
 
+    /**
+     * Called when the plugin is enabled. Initializes the plugin, loads configurations,
+     * hooks into the BedWars plugin, and registers commands and tasks.
+     */
     @Override
     public void onEnable() {
         Instance = this;
         super.onEnable();
         _config = new BWGConfiguration();
         _translator = new PluginTranslator(this, new String[]{"eng", "hun"});
-        _logger.Info(String.format("Loading %s...", getProjectName()));
+        _logger.info(String.format("Loading %s...", getProjectName()));
 
         if (VersionUtils.isLegacy()) {
-            _logger.Error("The plugin is not compatible with legacy versions of Minecraft. Please use a newer version of the game.");
+            _logger.error("The plugin is not compatible with legacy versions of Minecraft. Please use a newer version of the game.");
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
@@ -62,49 +114,41 @@ public class BedWarsGUI extends PluginBase {
         saveDefaultConfig();
 
         // Load Localizations
-        if (!_translator.Load())
-        {
-            _logger.Error("Failed to load localizations... Unloading...");
+        if (!_translator.load()) {
+            _logger.error("Failed to load localizations... Unloading...");
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
 
         // Check BedWars Plugin
-        _logger.Debug("Hooking into BedWars...");
-        if (Bukkit.getPluginManager().isPluginEnabled("BedWars") || Bukkit.getPluginManager().isPluginEnabled("ScreamingBedWars"))
-        {
+        _logger.debug("Hooking into BedWars...");
+        if (Bukkit.getPluginManager().isPluginEnabled("BedWars") || Bukkit.getPluginManager().isPluginEnabled("ScreamingBedWars")) {
             _bedwarsApi = BedwarsAPI.getInstance();
-            _logger.Info("BedWars found and hooked into it.");
-        }
-        else
-        {
-            _logger.Warn("BedWars not found. Unloading...");
+            _logger.info("BedWars found and hooked into it.");
+        } else {
+            _logger.warn("BedWars not found. Unloading...");
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
 
         // Initialize SpiGUI
-        _logger.Debug("Initializing SpiGUI...");
+        _logger.debug("Initializing SpiGUI...");
         _spiGUI = new SpiGUI(this);
 
         // Register Commands
-        _logger.Debug("Registering commands...");
-        var command = getCommand("bwgui");
-        if (command != null) {
-            command.setExecutor(new CommandGUI());
-        }
+        _logger.debug("Registering commands...");
+        new CommandGUI();
 
         // Load Arena Modes
-        _logger.Debug("Loading arena modes...");
+        _logger.debug("Loading arena modes...");
         _arenaModes = new ArrayList<>();
         List<?> modesList = getConfig().getList("modes");
         if (modesList == null) {
-            _logger.Error("Failed to load arena modes... Unloading...");
+            _logger.error("Failed to load arena modes... Unloading...");
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
         for (Object item : modesList) {
-            // Each 'item' in the list is a LinkedHashMap.
             if (item instanceof Map) {
                 Map<String, Object> modeMap = (Map<String, Object>) item;
 
@@ -119,53 +163,57 @@ public class BedWarsGUI extends PluginBase {
             }
         }
 
-        // Register cache cleanup task.
+        // Register cache cleanup task
         if (cacheCleanTask != null && !cacheCleanTask.isCancelled())
             cacheCleanTask.cancel();
-        cacheCleanTask = new CacheCleanTask(); // Runs every 5 minutes
+        cacheCleanTask = new CacheCleanTask();
         cacheCleanTask.runTaskTimer(this, 0, 5 * 60 * 20);
 
-
-        _logger.Ok(String.format("%s has been successfully loaded.", getProjectName()));
+        _logger.ok(String.format("%s has been successfully loaded.", getProjectName()));
         if (Config().checkForUpdates) {
             isUpToDate().thenAccept(upToDate -> {
                 if (upToDate) {
-                    _logger.Ok("Plugin is up to date!");
+                    _logger.ok("Plugin is up to date!");
                 } else {
-                    _logger.Warn("A new version of the plugin is available: " + getDownloadUrl());
+                    _logger.warn("A new version of the plugin is available: " + getDownloadUrl());
                 }
             }).exceptionally(e -> {
-                _logger.Error("Failed to determine update status: " + e.getMessage());
+                _logger.error("Failed to determine update status: " + e.getMessage());
                 return null;
             });
         }
     }
 
+    /**
+     * Called when the plugin is disabled. Cleans up resources and logs the unload event.
+     */
     @Override
     public void onDisable() {
         super.onDisable();
-        _logger.Info(String.format("%s has been successfully unloaded.", getProjectName()));
+        _logger.info(String.format("%s has been successfully unloaded.", getProjectName()));
     }
 
+    /**
+     * Reloads the plugin's configuration and arena modes.
+     */
     public void reload() {
-        _logger.Info(String.format("Reloading %s...", getProjectName()));
-        _logger.Debug("Reloading localizations...");
-        _translator.Load();
-        _logger.Debug("Localizations reloaded.");
-        _logger.Debug("Reloading configuration...");
+        _logger.info(String.format("Reloading %s...", getProjectName()));
+        _logger.debug("Reloading localizations...");
+        _translator.load();
+        _logger.debug("Localizations reloaded.");
+        _logger.debug("Reloading configuration...");
         this._config.load();
-        _logger.Debug("Configuration reloaded.");
+        _logger.debug("Configuration reloaded.");
 
         _arenaModes.clear();
-        _logger.Debug("Loading arena modes...");
+        _logger.debug("Loading arena modes...");
         List<?> modesList = getConfig().getList("modes");
         if (modesList == null) {
-            _logger.Error("Failed to load arena modes... Unloading...");
+            _logger.error("Failed to load arena modes... Unloading...");
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
         for (Object item : modesList) {
-            // Each 'item' in the list is a LinkedHashMap.
             if (item instanceof Map) {
                 Map<String, Object> modeMap = (Map<String, Object>) item;
 
@@ -179,6 +227,6 @@ public class BedWarsGUI extends PluginBase {
                 _arenaModes.add(arenaMode);
             }
         }
-        _logger.Debug("Loaded arena modes.");
+        _logger.debug("Loaded arena modes.");
     }
 }
