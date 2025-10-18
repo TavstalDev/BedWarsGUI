@@ -2,7 +2,7 @@
 
 ![Release (latest by date)](https://img.shields.io/github/v/release/TavstalDev/BedWarsGUI?style=plastic-square)
 ![Workflow Status](https://img.shields.io/github/actions/workflow/status/TavstalDev/BedWarsGUI/ghrelease.yml?branch=stable&label=build&style=plastic-square)
-![License](https://img.shields.io/github/license/TavstalDev/BedWarsGUI?style=plastic-square)
+![License](https://img.shields.io/github/license/TavstalDev/BedWarsGUI)
 ![Downloads](https://img.shields.io/github/downloads/TavstalDev/BedWarsGUI/total?style=plastic-square)
 ![Issues](https://img.shields.io/github/issues/TavstalDev/BedWarsGUI?style=plastic-square)
 
