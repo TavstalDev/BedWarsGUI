@@ -2,6 +2,7 @@ package io.github.tavstaldev.bedWarsGUI;
 
 import com.samjakob.spigui.SpiGUI;
 import io.github.tavstaldev.bedWarsGUI.commands.CommandGUI;
+import io.github.tavstaldev.bedWarsGUI.metrics.Metrics;
 import io.github.tavstaldev.bedWarsGUI.models.ArenaMode;
 import io.github.tavstaldev.bedWarsGUI.tasks.CacheCleanTask;
 import io.github.tavstaldev.minecorelib.PluginBase;
@@ -168,6 +169,15 @@ public class BedWarsGUI extends PluginBase {
             cacheCleanTask.cancel();
         cacheCleanTask = new CacheCleanTask();
         cacheCleanTask.runTaskTimer(this, 0, 5 * 60 * 20);
+
+        // Metrics
+        try {
+            @SuppressWarnings("unused") Metrics metrics = new Metrics(this, 27758);
+        }
+        catch (Exception ex)
+        {
+            _logger.error("Failed to start Metrics: " + ex.getMessage());
+        }
 
         _logger.ok(String.format("%s has been successfully loaded.", getProjectName()));
         if (Config().checkForUpdates) {
