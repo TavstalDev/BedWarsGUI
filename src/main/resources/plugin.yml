@@ -1,5 +1,5 @@
 main: io.github.tavstaldev.bedWarsGUI.BedWarsGUI
-version: 1.0.4
+version: 1.0.5
 
 name: BedWarsGUI
 api-version: '1.21'
